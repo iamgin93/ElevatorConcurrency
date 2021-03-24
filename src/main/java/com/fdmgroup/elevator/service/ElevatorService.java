@@ -1,8 +1,12 @@
 package com.fdmgroup.elevator.service;
 
 import com.fdmgroup.elevator.data.Elevator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ElevatorService implements Runnable{
+    private static final Logger logger = LogManager.getLogger(ElevatorService.class);
+
     private final Elevator elevator;
     private String pickUpLevel;
     private String dropOffLevel;
@@ -53,7 +57,7 @@ public class ElevatorService implements Runnable{
             System.out.println("Lift " + currentThread + " is dropping off passengers at level "+currentLevel);
             elevator.setLevel(currentLevel);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 
