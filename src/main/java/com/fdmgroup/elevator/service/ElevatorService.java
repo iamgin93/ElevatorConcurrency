@@ -4,6 +4,10 @@ import com.fdmgroup.elevator.data.Elevator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author Gin
+ * @version 1.0
+ */
 public class ElevatorService implements Runnable{
     private static final Logger logger = LogManager.getLogger(ElevatorService.class);
 
