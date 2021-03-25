@@ -1,20 +1,73 @@
 package com.fdmgroup.elevator.controller;
 
-import com.fdmgroup.elevator.service.ElevatorService;
+import com.fdmgroup.elevator.data.Elevator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+
 /**
  * @author Gin
  * @version 1.0
  */
 public class ElevatorController{
-    private final ElevatorService elevatorService;
+    private static final Logger logger = LogManager.getLogger(Elevator.class);
+    private int maxNumberOfElevators;
+    List<Thread> listOfElevatorThreads = new ArrayList<>();
 
-    public ElevatorController(ElevatorService elevatorService) {
-        this.elevatorService = elevatorService;
+
+    public void initialiseElevators(){
+        File configFile = new File("src/main/resources/config.properties");
+        try (FileReader reader = new FileReader(configFile)) {
+            Properties props = new Properties();
+            props.load(reader);
+            maxNumberOfElevators = Integer.parseInt(props.getProperty("ELEVATOR_NUMBER"));
+            System.out.println("Maximum Number of elevators: "+maxNumberOfElevators);
+
+            for (int i = 0; i < maxNumberOfElevators ; i++) {
+                listOfElevatorThreads.add(new Thread(new Elevator()));
+            }
+            Iterator<Thread> elevatorItr = listOfElevatorThreads.iterator();
+            while(elevatorItr.hasNext()){
+                Thread elevatorThread = elevatorItr.next();
+//                elevatorThread.start();
+                System.out.println(elevatorThread.getState());
+            }
+        } catch (IOException e) {
+            logger.error(e);
+        }
     }
 
-    public void operateElevator(){
-        Thread t1 = new Thread(elevatorService);
-        t1.start();
+    public void configureNumberOfElevators(String input){
+        String src;
+        String dest;
+        input = input.trim();
+        if(input.contains(",")){
+            String[] srcDest = input.split(",");
+            System.out.println("Number of lifts: "+srcDest.length);
+            if(srcDest.length > maxNumberOfElevators){
+                System.out.println("The maximum allowable number of lifts is: " + maxNumberOfElevators+"\nPlease try again");
+            }else{
+
+                for (String pair: srcDest) {
+                    src = pair.split(":")[0];
+                    dest = pair.split(":")[1];
+                }
+            }
+
+        }else {
+
+            src = input.split(":")[0];
+            dest = input.split(":")[1];
+            System.out.println("Going from level: "+src+ " to level "+dest);
+
+        }
     }
     public void updateElevatorView(){
 

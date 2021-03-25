@@ -9,6 +9,7 @@ class ElevatorTest {
     @Test
     void getLevel() {
         assertEquals(1,new Elevator().getLevel());
+
     }
 
 }
