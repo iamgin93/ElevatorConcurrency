@@ -9,14 +9,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * @author Gin
+ * @version 1.0
+ */
+
 public class userInputService {
     private static final Logger logger = LogManager.getLogger(Elevator.class);
-    ElevatorController elevatorController = new ElevatorController();
+    ElevatorController elevatorController;
+
+    public userInputService(ElevatorController elevatorController) {
+        this.elevatorController = elevatorController;
+    }
 
     public void readUserInput(){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
          try {
-            String input = reader.readLine();
+             String input = reader.readLine();
             elevatorController.configureNumberOfElevators(input);
 
         } catch (
