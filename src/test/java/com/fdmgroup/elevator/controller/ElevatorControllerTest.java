@@ -9,4 +9,20 @@ class ElevatorControllerTest {
     @Test
     void getNumberOfElevators() {
     }
+
+    @Test
+    void checkElevatorsStatus() {
+    }
+
+    @Test
+    void initialiseElevators() {
+    }
+
+    @Test
+    void configureNumberOfElevators() {
+    }
+
+    @Test
+    void updateElevatorView() {
+    }
 }

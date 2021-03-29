@@ -1,11 +1,10 @@
 package com.fdmgroup.elevator.main;
 
 import com.fdmgroup.elevator.controller.ElevatorController;
-import com.fdmgroup.elevator.service.userInputService;
+import com.fdmgroup.elevator.service.UserInputService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
 /**
  * @author Gin
  * @version 1.0
@@ -13,7 +12,7 @@ import java.io.*;
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
     private static ElevatorController elevatorController = new ElevatorController();
-    private static userInputService userInputService = new userInputService(elevatorController);
+    private static UserInputService userInputService = new UserInputService(elevatorController);
     public static void main(String[] args) {
 
         elevatorController.initialiseElevators();

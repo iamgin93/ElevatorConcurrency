@@ -14,16 +14,20 @@ import java.util.Properties;
 
 /**
  * @author Gin
- * @version 1.0
+ * @version 1.0.0
  */
 public class ElevatorController{
-    private static final Logger logger = LogManager.getLogger(Elevator.class);
+    private static final Logger logger = LogManager.getLogger(ElevatorController.class);
+
     private static int maxNumberOfElevators;
     List<Thread> listOfElevatorThreads = new ArrayList<>();
     List<Elevator> listOfElevators = new ArrayList<>();
     public static String pickUpLevel;
     public static String dropOffLevel;
 
+    public static int getMaxNumberOfElevators() {
+        return maxNumberOfElevators;
+    }
     public void checkElevatorsStatus(){
         Iterator<Thread> elevatorItr = listOfElevatorThreads.iterator();
         while(elevatorItr.hasNext()){
@@ -63,42 +67,24 @@ public class ElevatorController{
         String src;
         String dest;
         input = input.trim();
-        if(input.contains(",")){
-            String[] srcDest = input.split(",");
-            System.out.println("Number of lifts: "+srcDest.length);
-            if(srcDest.length > maxNumberOfElevators){
-                System.out.println("The maximum allowable number of lifts is: " + maxNumberOfElevators+"\nPlease try again");
-            }else{
 
-                checkElevatorsStatus();
-                int k = 0;
-                for (String pair: srcDest) {
-                    src = pair.split(":")[0];
-                    dest = pair.split(":")[1];
-                    pickUpLevel = src;
-                    dropOffLevel = dest;
-                    listOfElevators.get(k).setPickUpLevel(src);
-                    listOfElevators.get(k).setDropOffLevel(dest);
-                    synchronized (listOfElevators.get(k)){
-                        listOfElevators.get(k).notify();
-                        listOfElevators.get(k).setMove(true);
-                    }
-                    k++;
+        String[] srcDest = input.split(",");
+        System.out.println("Number of lifts required: "+srcDest.length);
+
+            checkElevatorsStatus();
+            int k = 0;
+            for (String pair: srcDest) {
+                src = pair.split(":")[0];
+                dest = pair.split(":")[1];
+                pickUpLevel = src;
+                dropOffLevel = dest;
+                listOfElevators.get(k).setPickUpLevel(src);
+                listOfElevators.get(k).setDropOffLevel(dest);
+                synchronized (listOfElevators.get(k)){
+                    listOfElevators.get(k).notify();
                 }
-
+                k++;
             }
-
-        }else {
-            if(!input.contains(":")){
-                System.out.println("Please provide your input in this format: \nPick-up Floor:Drop-Off Floor");
-            }else{
-                src = input.split(":")[0];
-                dest = input.split(":")[1];
-                System.out.println("Going from level: "+src+ " to level "+dest);
-
-            }
-
-        }
     }
     public void updateElevatorView(){
 

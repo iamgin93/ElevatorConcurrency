@@ -1,7 +1,6 @@
 package com.fdmgroup.elevator.service;
 
 import com.fdmgroup.elevator.controller.ElevatorController;
-import com.fdmgroup.elevator.data.Elevator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,11 +13,12 @@ import java.io.InputStreamReader;
  * @version 1.0
  */
 
-public class userInputService {
-    private static final Logger logger = LogManager.getLogger(Elevator.class);
+public class UserInputService {
+    private static final Logger logger = LogManager.getLogger(UserInputService.class);
     ElevatorController elevatorController;
+    UserValidation userValidation = new UserValidation();
 
-    public userInputService(ElevatorController elevatorController) {
+    public UserInputService(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
     }
 
@@ -26,7 +26,10 @@ public class userInputService {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
          try {
              String input = reader.readLine();
-            elevatorController.configureNumberOfElevators(input);
+             while (!userValidation.validateUserInput(input)){
+                 input = reader.readLine();
+             }
+             elevatorController.configureNumberOfElevators(input);
 
         } catch (
         IOException e) {

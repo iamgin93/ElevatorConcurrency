@@ -11,20 +11,11 @@ import org.apache.logging.log4j.Logger;
 public class Elevator implements Runnable{
     private static final Logger logger = LogManager.getLogger(Elevator.class);
     private int level = 1;
-    private boolean move;
     private String pickUpLevel;
     private String dropOffLevel;
 
-    public String getPickUpLevel() {
-        return pickUpLevel;
-    }
-
     public void setPickUpLevel(String pickUpLevel) {
         this.pickUpLevel = pickUpLevel;
-    }
-
-    public String getDropOffLevel() {
-        return dropOffLevel;
     }
 
     public void setDropOffLevel(String dropOffLevel) {
@@ -37,14 +28,6 @@ public class Elevator implements Runnable{
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public boolean isMove() {
-        return move;
-    }
-
-    public void setMove(boolean move) {
-        this.move = move;
     }
 
     public void move(String pickUpLevel, String dropOffLevel) {
@@ -115,11 +98,5 @@ public class Elevator implements Runnable{
             }
         }
     }
-    Runnable elevatorThreadRunnable;
-    public void setRunnable(Runnable runnable){
-        elevatorThreadRunnable = runnable;
-        synchronized (this){
-            this.notify();
-        }
-    }
+
 }
