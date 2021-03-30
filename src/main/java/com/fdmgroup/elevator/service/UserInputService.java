@@ -9,19 +9,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * Provides the functionality of reading input from console
  * @author Gin
  * @version 1.0
  */
-
 public class UserInputService {
     private static final Logger logger = LogManager.getLogger(UserInputService.class);
     ElevatorController elevatorController;
     UserValidation userValidation = new UserValidation();
-
+    /**
+     * <p>Constructor
+     * </p>
+     * @param elevatorController ElevatorController class
+     */
     public UserInputService(ElevatorController elevatorController) {
         this.elevatorController = elevatorController;
     }
 
+    /**
+     * <p>This method reads the user input from the console and calls other methods to validate the input
+     * </p>
+     */
     public void readUserInput(){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
          try {

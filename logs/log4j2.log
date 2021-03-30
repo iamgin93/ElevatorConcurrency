@@ -1,0 +1,6 @@
+20210331 00:57:01 DEBUG [main] service.UserValidation UserValidation.java38 - Maximum Number of floors: 12
+20210331 00:57:01 INFO  [main] service.UserValidation UserValidation.java41 - Floor Delimiter: :
+20210331 00:57:01 INFO  [main] service.UserValidation UserValidation.java42 - Journey Delimiter: ,
+20210331 00:57:15 DEBUG [main] service.UserValidation UserValidation.java38 - Maximum Number of floors: 12
+20210331 00:57:15 INFO  [main] service.UserValidation UserValidation.java41 - Floor Delimiter: :
+20210331 00:57:15 INFO  [main] service.UserValidation UserValidation.java42 - Journey Delimiter: ,

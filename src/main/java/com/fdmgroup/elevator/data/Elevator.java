@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * Represents an elevator
  * @author Gin
  * @version 1.0
  */
@@ -13,23 +14,44 @@ public class Elevator implements Runnable{
     private int level = 1;
     private String pickUpLevel;
     private String dropOffLevel;
-
+    /**
+     * <p>This method is setter which sets the pick up level of the elevator
+     * </p>
+     * @param pickUpLevel int: The level at which the elevator will stop to pick up passengers
+     */
     public void setPickUpLevel(String pickUpLevel) {
         this.pickUpLevel = pickUpLevel;
     }
-
+    /**
+     * <p>This method is a setter which sets the drop off level of the elevator
+     * </p>
+     * @param dropOffLevel int: The level at which the elevator will stop to drop off passengers
+     */
     public void setDropOffLevel(String dropOffLevel) {
         this.dropOffLevel = dropOffLevel;
     }
-
+    /**
+     * <p>This method is a getter which returns the current elevator level
+     * </p>
+     * @return current level the elevator is at
+     */
     public int getLevel() {
         return level;
     }
-
+    /**
+     * <p>This method is a setter which sets the current elevator level
+     * </p>
+     * @param level elevator level
+     */
     public void setLevel(int level) {
         this.level = level;
     }
-
+    /**
+     * <p>This method validates user input and returns a string
+     * </p>
+     * @param pickUpLevel String: pick up level for the elevator
+     * @param dropOffLevel String: drop off level for the elevator
+     */
     public void move(String pickUpLevel, String dropOffLevel) {
         try {
             int pickUpLvl = Integer.parseInt(pickUpLevel);
@@ -65,7 +87,6 @@ public class Elevator implements Runnable{
                 }
             }
             System.out.println(currentThread + " is dropping off passengers at level "+currentLevel);
-            System.out.println("Current Level of "+currentThread+": "+currentLevel);
             setLevel(currentLevel);
         } catch (InterruptedException e) {
             logger.error(e);

@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <Properties>
+        <Property name="log-path">logs</Property>
+    </Properties>
     <Appenders>
+        <File name="FileOut" fileName="${log-path}/log4j2.log" append="false">
+            <PatternLayout>
+                <Pattern>%d{yyyyMMdd HH:mm:ss} %-5p [%t] %C{2} %F%L - %m%n</Pattern>
+            </PatternLayout>
+        </File>
+
         <Console name="LogToConsole" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
     </Appenders>
+
     <Loggers>
         <Logger name="com.fdmgroup.elevator" level="debug" additivity="false">
-            <AppenderRef ref="LogToConsole"/>
+            <AppenderRef ref="FileOut"/>
         </Logger>
-        <Root level="error">
-            <AppenderRef ref="LogToConsole"/>
+        <Root level="debug">
+            <AppenderRef ref="FileOut" level="debug"/>
+            <AppenderRef ref="LogToConsole" level="info"/>
         </Root>
     </Loggers>
 </Configuration>

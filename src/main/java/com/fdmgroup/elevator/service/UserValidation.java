@@ -13,9 +13,20 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Provides the functionality of validating a user's input
+ * @author Gin
+ * @version 1.0
+ */
 public class UserValidation {
     private static final Logger logger = LogManager.getLogger(UserValidation.class);
 
+    /**
+     * <p>This method validates user input and returns a string
+     * </p>
+     * @param input String
+     * @return boolean, true if input is correct and false if input is not of accepted format
+     */
     public boolean validateUserInput(String input){
         String floorDelimiter = null;
         String journeyDelimiter = null;
@@ -24,15 +35,15 @@ public class UserValidation {
             Properties props = new Properties();
             props.load(reader);
             int maxNumberOfFloors = Integer.parseInt(props.getProperty("ElEVATOR_FLOORS"));
-            System.out.println("Maximum Number of floors: "+maxNumberOfFloors);
+            logger.debug("Maximum Number of floors: "+maxNumberOfFloors);
             floorDelimiter = props.getProperty("FLOOR_DELIMITER");
             journeyDelimiter = props.getProperty("JOURNEY_DELIMITER");
-            System.out.println("Floor Delimiter: "+floorDelimiter);
-            System.out.println("Journey Delimiter: "+journeyDelimiter);
+            logger.info("Floor Delimiter: "+floorDelimiter);
+            logger.info("Journey Delimiter: "+journeyDelimiter);
         } catch (IOException e) {
             logger.error(e);
         }
-        String regex = "((\\d"+floorDelimiter+"\\d+)("+journeyDelimiter+"|$))*";
+        String regex = "((\\d+"+floorDelimiter+"\\d+)("+journeyDelimiter+"|$))*";
         input = input.trim();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);

@@ -1,6 +1,7 @@
 package com.fdmgroup.elevator.controller;
 
 import com.fdmgroup.elevator.data.Elevator;
+import com.fdmgroup.elevator.view.ElevatorView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,28 +14,63 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * Entertains user requests and fetch necessary resource
  * @author Gin
  * @version 1.0.0
  */
 public class ElevatorController{
     private static final Logger logger = LogManager.getLogger(ElevatorController.class);
-
+    private ElevatorView elevatorView = new ElevatorView();
     private static int maxNumberOfElevators;
     List<Thread> listOfElevatorThreads = new ArrayList<>();
     List<Elevator> listOfElevators = new ArrayList<>();
+    /**
+     * The level at which the elevator will stop to pick up passengers
+     *
+     */
     public static String pickUpLevel;
+    /**
+     * The level at which the elevator will stop to drop off passengers
+     *
+     */
     public static String dropOffLevel;
-
-    public static int getMaxNumberOfElevators() {
-        return maxNumberOfElevators;
+    /**
+     * <p>This method is a getter that returns the list of elevators
+     * </p>
+     */
+    public List<Elevator> getListOfElevators() {
+        return listOfElevators;
     }
-    public void checkElevatorsStatus(){
+    /**
+     * <p>This method is a getter that returns the list of threads
+     * </p>
+     */
+    public List<Thread> getListOfElevatorThreads() {
+        return listOfElevatorThreads;
+    }
+
+    /**
+     * <p>This method checks the thread status
+     * </p>
+     * @return
+     */
+    public boolean checkifElevatorsAreRunning(){
+        boolean stillRunning = false;
         Iterator<Thread> elevatorItr = listOfElevatorThreads.iterator();
         while(elevatorItr.hasNext()){
             Thread elevatorThread = elevatorItr.next();
-            System.out.println("State of "+elevatorThread.getName()+": "+elevatorThread.getState());
+            if (!elevatorThread.getState().toString().equals("WAITING")){
+                    stillRunning = true;
+            }
+//            System.out.println("Current State of "+elevatorThread.getName()+": "+elevatorThread.getState());
         }
+        return stillRunning;
     }
+
+    /**
+     * <p>This method starts the threads that the elevators will be running on.
+     * </p>
+     */
     public void initialiseElevators(){
         File configFile = new File("src/main/resources/config.properties");
         try (FileReader reader = new FileReader(configFile)) {
@@ -63,15 +99,20 @@ public class ElevatorController{
         }
     }
 
+    /**
+     * <p>This method gets the number of elevators to run and wakes up available threads that are waiting to execute
+     * </p>
+     * @param input String
+     */
     public void configureNumberOfElevators(String input){
-        String src;
-        String dest;
-        input = input.trim();
+        try {
+            String src;
+            String dest;
+            input = input.trim();
 
-        String[] srcDest = input.split(",");
-        System.out.println("Number of lifts required: "+srcDest.length);
+            String[] srcDest = input.split(",");
+            System.out.println("Number of lifts required: "+srcDest.length);
 
-            checkElevatorsStatus();
             int k = 0;
             for (String pair: srcDest) {
                 src = pair.split(":")[0];
@@ -85,9 +126,16 @@ public class ElevatorController{
                 }
                 k++;
             }
+        } catch (Exception e) {
+            logger.error(e);
+        }
     }
+    /**
+     * <p>This method updates the state of the application so the ElevatorView class can update accordingly
+     * </p>
+     */
     public void updateElevatorView(){
-
+        elevatorView.printElevatorStatus(listOfElevators);
     }
 
 }

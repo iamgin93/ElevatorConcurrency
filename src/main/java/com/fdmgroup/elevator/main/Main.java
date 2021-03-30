@@ -13,12 +13,22 @@ public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
     private static ElevatorController elevatorController = new ElevatorController();
     private static UserInputService userInputService = new UserInputService(elevatorController);
+    /**
+     * <p>Main method where the program will start
+     * </p>
+     * @param args no args
+     */
     public static void main(String[] args) {
 
         elevatorController.initialiseElevators();
         while(true){
             System.out.println("Please provide your input in this format: \nPick-up Floor:Drop-Off Floor");
             userInputService.readUserInput();
+            while (elevatorController.checkifElevatorsAreRunning()){
+
+            }
+            elevatorController.updateElevatorView();
+
         }
 
 
